@@ -95,6 +95,11 @@ Con respecto al balanceo de carga, este es como las peticiones son distribuidas 
 
 * Cassandra posee principalmente dos estrategias para mantener redundancia en la replicación de datos. ¿Cuáles son estos? ¿Cuál es la ventaja de uno sobre otro? ¿Cuál utilizaría usted para en el caso actual y por qué? Justifique apropiadamente su respuesta.
 
+Las dos estrategias son la *SimpleStrategy* y *NetworkTopologyStrategy*. En esencia, en *NetworkTopologyStrategy* todas las copias reliazadas tendran el mismo hash, con esto cassandra compondra arboles binarios, se llaman Merkle trees, los cuales serán usados para reparar cuando haya discrepancias en las versiones de los datos. *SimpleStrategy* es una estrategia basica de replicación, se usa cuando solo existe un solo datacenter y ubica las repicas en una subsequencia de nodos en sentido horario. Siempre se recimienta el uso de *NetworkTopologyStrategy* cuando se trabaje con mas de un datacenter ya que la principal diferncia que se encuentra entre estas dos estrategias es el uso que se les da dependiendo de la cantidad de datacenter con la cual conste la red.
+
+En el caso de este trabajo se recomendaria el uso de *SimpleStrategy*, ya que solo se consta de una datacenter el cual contiene todos los nodos. Si se usara *NetworkTopologyStrategy* seria un desperdicio y quizas no funcionaria como es deseado, ya que solamente esta configurado para el uso de dos o mas datacenter, mas bien este posee distintas estrategias dependiendo de cuantas replicas se quieran hacer, las mas comunes son entre dos y tres replicas en cada datacenter.
 
 
 * Teniendo en cuenta el contexto del problema ¿Usted cree que la solución propuesta es la correcta? ¿Qué ocurre cuando se quiere escalar en la solución? ¿Qué mejoras implementaría? Oriente su respuesta hacia el Sharding (la replicación/distribución de los datos) y comente una estrategia que podría seguir para ordenar los datos.
+
+
