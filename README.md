@@ -102,4 +102,4 @@ En el caso de este trabajo se recomendaria el uso de *SimpleStrategy*, ya que so
 
 * Teniendo en cuenta el contexto del problema ¿Usted cree que la solución propuesta es la correcta? ¿Qué ocurre cuando se quiere escalar en la solución? ¿Qué mejoras implementaría? Oriente su respuesta hacia el Sharding (la replicación/distribución de los datos) y comente una estrategia que podría seguir para ordenar los datos.
 
-
+La solucion propuesta solo se podria considerar correcta pensando que se deberia de implementar en una clinica con muchos pacientes. En este expe
