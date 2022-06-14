@@ -72,12 +72,21 @@ Cabe decir para las ID se utilizo el tipo de dato UUID debido a que se encontro 
 
 * Explique la arquitectura que Cassandra maneja. Cuando se crea el clúster ¿Cómo los nodos se conectan? ¿Qué ocurre cuando un cliente realiza una petición a uno de los nodos? ¿Qué ocurre cuando uno de los nodos se desconecta? ¿La red generada entre los nodos siempre es eficiente? ¿Existe balanceo de carga?
 
-Cassandra debe poder tolerar fallos en casos que alguna parte del sistema falle y poder establecer comunicación estre todos sus nodos, por esto mismo se utiliza una arquitectura Peer To Peer, además de que esto ayuda a su escalabilidad. Los nodos deben ser iguales y su comunicacion se logrará gracias al sistema P2P con el protocolo Gossip, ya que este sirve para el intercambio de informacion entre los nodos. Para mantenar la consitencia entre los datos se realizan Logs de los commits de cada nodo cuando se quiere escribir en estos, así se logra mantener consistencia de los datos.
-<div align="center">
+Cassandra debe poder tolerar fallos en casos que alguna parte del sistema falle y poder establecer comunicación estre todos sus nodos, por esto mismo se utiliza una arquitectura Peer To Peer, además de que esto ayuda a su escalabilidad. Los nodos deben ser iguales y su comunicacion se logrará gracias al sistema P2P con el protocolo Gossip, ya que este sirve para el intercambio de informacion entre los nodos. Para mantenar la consitencia entre los datos se realizan Logs de los commits de cada nodo cuando se quiere escribir en estos, así se logra mantener consistencia de los datos. Cabe decir que la arquitectura de cassandra no sigue el modelo de maestro-esclavo, como se dijo antes, todos los nodos son iguales.
+
+<center>
+  
   ![image](https://user-images.githubusercontent.com/90724923/173517768-e7533c0c-e1f5-4e48-9106-c47a3f980068.png)
 
-  
-</div>
+</center>
+
+Si vemos la imagen adjunta, se puede imaginar a cassandra como un anillo donde multiples nodos estan conectados, donde los nodos deberian de tener cada uno una particion de cada tabla de la base de datos y estos solo se pueden comunicar con los adyacentes. En caso de que algun nodo se caiga, mediante el protocolo Gossip se deberia dar a conocer a todos los nodos de la red que no se encuentren caidos de la falta de este nodo. La forma de la cual los nodos son concientes de los otros es mediante la constante actualizacion que imparte el protocola ya mencionado, ya que este intercambia informacion hasta con tres nodos en un mismo cluster, logrando asi mantener a la red informada y en sincronia.
+
+Los nodos funcionan mediante ciertos elementos que le ayudan a trabajar con los datos como el commit log, el memTable y el SSTable. El commit log es un fichero donde se almacena la informacion sobre cambios hechos en los datos, por lo tanto sirve para realizar respaldos en el sistema en caso de fallos. La MemTable es un almacenamiento en memoria que contiene datos que aun no han sido guardados en la SSTable. La SSTable es el fichero que almacena todos los datos en disco, estos son inmutables una vez creados.
+
+Cuando un cliente hace una peticion de lectura, el nodo al cual esta consultado el cliente actua como el coordinador entre éste y el resto de los nodos donde se encuentran los datos a buscar mediante la consulta del clientre. El coordinador debe ser capaz de determinar que nodo será el que respondera a la consulta. En caso de que el cliente quiera realizar escritura sigue habiendo un nodo coordinador, el cual es el que esta conectado el cliente, que va a ver a coordinar que nodos participaran en esta peticion.
+
+En los casos en que un nodo se desconecte, la red será alertada mediante el protocolo Gossip el cual, como se dijo antes, mantiene actualizada toda la red con los cambias que esta va teniendo.
 
 
 * Cassandra posee principalmente dos estrategias para mantener redundancia en la replicación de datos. ¿Cuáles son estos? ¿Cuál es la ventaja de uno sobre otro? ¿Cuál utilizaría usted para en el caso actual y por qué? Justifique apropiadamente su respuesta.
