@@ -88,6 +88,10 @@ Cuando un cliente hace una peticion de lectura, el nodo al cual esta consultado 
 
 En los casos en que un nodo se desconecte, la red será alertada mediante el protocolo Gossip el cual, como se dijo antes, mantiene actualizada toda la red con los cambias que esta va teniendo. El *Replica placement strategy* define la estretegia a seguir para realizar copias de los datos en diferentes nodos, asi se asegura accesibilidad con respecto a los datos y teleracia a fallos. Tambien existe el *Snitch*, el cual define las estrategias de replicacion y la forma de dirigir las consultas de manera eficiente. Por lo tanto en caso de que se cayera un nodo, la red será alertada por el protocolo Gossip y no deberia de haber fallos en la red ya que cassandra tiene previsto sistemas para la tolerancia a fallos como *Replica placement strategy* y *Snitch*.
 
+Para saber si la red generada es eficiente se debe de ser conciente de que cassandra no se ocupa para dar solucion a cualquier base de datos, ya que cassandra fue creada para el uso de grandes cantidades de datos, debido a que este fue creado con la finalidad de realizar busquedas de forma cómoda en una base de datos de gran tamaño. La arquitectura de cassandra, pese a que este hecha para una gran cantidad de datos como fue dicho, mientras mas nodos existan, mas dificil será mantener el sistema debido a que se deberan realizar mas procesos, como es el caso del Gossip que debe mantener a toda la red informada sobre los estados de los nodos. Por lo tanto, no siempre es eficiente, solo cuando se tiene mucho poder de procesamiento, ram y una gran cantidad de datos como para utilizar bien este sistema.
+
+Con respecto al balanceo de carga...
+
 
 * Cassandra posee principalmente dos estrategias para mantener redundancia en la replicación de datos. ¿Cuáles son estos? ¿Cuál es la ventaja de uno sobre otro? ¿Cuál utilizaría usted para en el caso actual y por qué? Justifique apropiadamente su respuesta.
 
