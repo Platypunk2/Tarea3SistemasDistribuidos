@@ -90,10 +90,11 @@ En los casos en que un nodo se desconecte, la red será alertada mediante el pro
 
 Para saber si la red generada es eficiente se debe de ser conciente de que cassandra no se ocupa para dar solucion a cualquier base de datos, ya que cassandra fue creada para el uso de grandes cantidades de datos, debido a que este fue creado con la finalidad de realizar busquedas de forma cómoda en una base de datos de gran tamaño. La arquitectura de cassandra, pese a que este hecha para una gran cantidad de datos como fue dicho, mientras mas nodos existan, mas dificil será mantener el sistema debido a que se deberan realizar mas procesos, como es el caso del Gossip que debe mantener a toda la red informada sobre los estados de los nodos. Por lo tanto, no siempre es eficiente, solo cuando se tiene mucho poder de procesamiento, ram y una gran cantidad de datos como para utilizar bien este sistema.
 
-Con respecto al balanceo de carga...
+Con respecto al balanceo de carga, este es como las peticiones son distribuidas en mas de un servidor. Cassandra utiliza como un particionador distribuido predeterminado el *RabdomPartitioner*, el cual da un buen balanceo de carga. Este distribuye la data entre nodos usando un hash MD5 para las columna de las llaves.
 
 
 * Cassandra posee principalmente dos estrategias para mantener redundancia en la replicación de datos. ¿Cuáles son estos? ¿Cuál es la ventaja de uno sobre otro? ¿Cuál utilizaría usted para en el caso actual y por qué? Justifique apropiadamente su respuesta.
+
 
 
 * Teniendo en cuenta el contexto del problema ¿Usted cree que la solución propuesta es la correcta? ¿Qué ocurre cuando se quiere escalar en la solución? ¿Qué mejoras implementaría? Oriente su respuesta hacia el Sharding (la replicación/distribución de los datos) y comente una estrategia que podría seguir para ordenar los datos.
